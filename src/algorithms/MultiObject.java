@@ -53,8 +53,16 @@ public class MultiObject {
 	        System.out.println("\nSolución óptima: " + Arrays.toString(variables));
 	        
 	        System.out.println("Frente de Pareto:");
+	        double[] cv_pareto = new double[4];
+	        int i = 0;
 	        for (Solution s : result) {
-	            System.out.println( Arrays.toString(s.getObjectives()) + " CV:" + MultiObject.calculate_cv(s.getObjectives(), beneficios, covarianzas) );
+	        	
+	        	Solution optimal_pareto = result.get(i);
+	        	for(int k=0; k<4; k++) {
+	        		cv_pareto[k] = ((RealVariable) optimal_pareto.getVariable(k)).getValue() / variable_values;
+	        	}
+	            System.out.println( Arrays.toString(s.getObjectives()) + " CV:" + MultiObject.calculate_cv(cv_pareto, beneficios, covarianzas) );
+	            i++;
 	        }	
         }
         
